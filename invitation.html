@@ -12,39 +12,47 @@
 
 <style>
 
-/* GLOBAL */
+/* GLOBAL DARK THEME */
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(to right, #fff5f7, #ffe9ec);
+  background: #0d0d0d;
+  color: #f5f5f5;
+}
+
+/* GOLD TEXT */
+h2, h5 {
+  font-family: 'Great Vibes', cursive;
+  color: #d4af37;
+  letter-spacing: 1px;
 }
 
 /* HERO */
 #hero {
   text-align: center;
-  padding: 40px 15px;
-}
-
-h2 {
-  font-family: 'Great Vibes', cursive;
-  font-size: 36px;
+  padding: 60px 20px;
+  background: radial-gradient(circle at top, #1a1a1a, #000);
 }
 
 .hero-names {
-  font-size: 18px;
-  margin-bottom: 20px;
+  font-size: 20px;
+  margin-bottom: 25px;
+  color: #fff;
 }
 
-/* GLASS */
-.glass {
-  background: rgba(255,255,255,0.6);
-  backdrop-filter: blur(10px);
+/* COUPLE CARD */
+.couple-card {
+  background: #141414;
   border-radius: 15px;
   padding: 10px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  border: 1px solid rgba(212,175,55,0.3);
+  box-shadow: 0 0 15px rgba(212,175,55,0.15);
+  transition: 0.3s;
+}
+.couple-card:hover {
+  transform: scale(1.05);
 }
 
-/* IMAGE */
 .couple-card img {
   width: 100%;
   height: 220px;
@@ -52,13 +60,13 @@ h2 {
   border-radius: 10px;
 }
 
-/* CARD */
+/* CARD BOX */
 .card-box {
-  padding: 14px;
-  border-radius: 14px;
-  background: rgba(255,255,255,0.8);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  padding: 18px;
+  border-radius: 12px;
+  background: #111;
+  border: 1px solid rgba(212,175,55,0.3);
+  box-shadow: 0 0 10px rgba(212,175,55,0.2);
   font-size: 15px;
   transition: 0.3s;
 }
@@ -70,44 +78,132 @@ h2 {
 #countdown {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
   flex-wrap: wrap;
 }
+
 .time-box {
-  background: linear-gradient(135deg, #ff4d6d, #ff758c);
-  color: white;
-  padding: 12px;
+  background: linear-gradient(145deg, #1a1a1a, #000);
+  border: 1px solid #d4af37;
+  color: #d4af37;
+  padding: 14px;
   border-radius: 10px;
-  min-width: 70px;
+  min-width: 80px;
+  box-shadow: 0 0 10px rgba(212,175,55,0.3);
 }
 
 /* MEMORY */
+/* MEMORY SECTION */
 .memory-block {
-  background: rgba(255,255,255,0.6);
-  padding: 15px;
+  background: #111;
+  padding: 20px;
   border-radius: 15px;
-  backdrop-filter: blur(10px);
+  border: 1px solid rgba(212,175,55,0.2);
 }
 
+/* SCROLL CONTAINER */
 .memory-gallery {
   display: flex;
   gap: 12px;
   overflow-x: auto;
+  scroll-behavior: smooth;
   padding-bottom: 10px;
+
+  /* MOBILE SMOOTH SCROLL */
+  -webkit-overflow-scrolling: touch;
+
+  /* SNAP EFFECT (VERY PREMIUM) */
+  scroll-snap-type: x mandatory;
+}
+
+/* HIDE SCROLLBAR */
+.memory-gallery::-webkit-scrollbar {
+  display: none;
+}
+.memory-gallery {
+  scrollbar-width: none;
+}
+
+/* IMAGES */
+/* MEMORY BLOCK */
+.memory-block {
+  background: #111;
+  padding: 20px 15px;
+  border-radius: 18px;
+  border: 1px solid rgba(212,175,55,0.2);
+}
+
+/* TITLE */
+.memory-block h5 {
+  color: #d4af37;
+  margin-bottom: 12px;
+}
+
+/* INSTAGRAM STYLE SCROLL */
+.memory-gallery {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+
+  /* SMOOTH SCROLL */
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
+
+  /* SNAP */
+  scroll-snap-type: x mandatory;
+
+  /* HIDE SCROLLBAR */
+  scrollbar-width: none;
 }
+.memory-gallery::-webkit-scrollbar {
+  display: none;
+}
+
+/* IMAGE CARD */
 .memory-gallery img {
-  width: 140px;
-  height: 170px;
+  flex: 0 0 auto;
+
+  width: 150px;
+  height: 190px;
   object-fit: cover;
-  border-radius: 12px;
+
+  border-radius: 16px;
   cursor: pointer;
-  flex-shrink: 0;
+
+  /* SNAP CENTER */
+  scroll-snap-align: center;
+
+  /* INSTAGRAM STYLE SHADOW */
+  box-shadow: 0 6px 15px rgba(0,0,0,0.6);
+
   transition: 0.3s;
 }
+
+/* HOVER (DESKTOP ONLY) */
 .memory-gallery img:hover {
   transform: scale(1.05);
+}
+
+/* MOBILE PERFECT FIT */
+@media (max-width: 768px) {
+  .memory-gallery {
+    gap: 10px;
+  }
+
+  .memory-gallery img {
+    width: 120px;
+    height: 160px;
+    border-radius: 14px;
+  }
+}
+
+/* MOBILE PERFECT FIT */
+@media (max-width: 768px) {
+  .memory-gallery img {
+    width: 120px;
+    height: 160px;
+  }
 }
 
 /* MODAL */
@@ -117,25 +213,36 @@ h2 {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.9);
+  background: rgba(0,0,0,0.95);
   display: none;
   justify-content: center;
   align-items: center;
   z-index: 999;
 }
-.image-modal img {
-  max-width: 90%;
-  max-height: 90%;
-  border-radius: 10px;
+
+/* BUTTON */
+.btn-danger {
+  background: linear-gradient(45deg, #d4af37, #f9e27d);
+  border: none;
+  color: black;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(212,175,55,0.5);
+}
+.btn-danger:hover {
+  background: #f9e27d;
+}
+
+/* FOOTER */
+footer {
+  color: #aaa;
+  font-size: 13px;
 }
 
 /* MOBILE */
 @media (max-width: 768px) {
-  h2 { font-size: 26px; }
+  h2 { font-size: 28px; }
   .hero-names { font-size: 16px; }
-  .couple-card img { height: 150px; }
-  .card-box { font-size: 14px; padding: 12px; }
-  .time-box { min-width: 55px; padding: 10px; }
+  .couple-card img { height: 160px; }
   .memory-gallery img { width: 110px; height: 140px; }
 }
 
@@ -149,6 +256,7 @@ h2 {
 <!-- HERO -->
 <section id="hero">
   <h2 id="welcome"></h2>
+  <p>to the wedding ceremony of </p>
   <p class="hero-names">
     Vishwa ❤️ Rashmi <br>&<br>
     Harsha ❤️ Hamsika
@@ -316,28 +424,23 @@ function closeModal() {
   document.getElementById("imageModal").style.display = "none";
 }
 
-/* SMOOTH AUTO SCROLL */
-let isInteracting = false;
-
 document.querySelectorAll(".memory-gallery").forEach(gallery => {
-  gallery.addEventListener("touchstart", () => isInteracting = true);
-  gallery.addEventListener("mouseenter", () => isInteracting = true);
-  gallery.addEventListener("touchend", () => isInteracting = false);
-  gallery.addEventListener("mouseleave", () => isInteracting = false);
-});
+  gallery.addEventListener("scroll", () => {
+    const images = gallery.querySelectorAll("img");
+    const center = gallery.scrollLeft + gallery.offsetWidth / 2;
 
-function autoScroll() {
-  document.querySelectorAll(".memory-gallery").forEach(gallery => {
-    if (!isInteracting) {
-      gallery.scrollLeft += 0.3;
-      if (gallery.scrollLeft >= gallery.scrollWidth - gallery.clientWidth) {
-        gallery.scrollLeft = 0;
+    images.forEach(img => {
+      const box = img.offsetLeft + img.offsetWidth / 2;
+      const distance = Math.abs(center - box);
+
+      if (distance < 80) {
+        img.style.transform = "scale(1.1)";
+      } else {
+        img.style.transform = "scale(1)";
       }
-    }
+    });
   });
-  setTimeout(autoScroll, 16);
-}
-autoScroll();
+});
 
 const song = document.getElementById("song");
 
