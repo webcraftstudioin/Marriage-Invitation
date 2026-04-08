@@ -40,18 +40,17 @@ body {
 <br>
 and
 <br>
-<b>Harsha & Hamsika</b>
+<b>Harsha & Hamsike</b>
 <br>
 as they begin their beautiful journey together.</h2>
   <p>Please enter your name</p>
 
   <input type="text" id="name" class="form-control mb-3" placeholder="Your Name">
 
-  <button class="btn btn-dark w-100" onclick="goNext()">View Invitation</button>
-</div>
+  <button class="btn btn-dark w-100" onclick="goNext(event)">View Invitation</button>
 
 <script>
-function goNext() {
+function goNext(e) {
   let name = document.getElementById("name").value;
 
   if (name.trim() === "") {
@@ -59,7 +58,14 @@ function goNext() {
     return;
   }
 
-  window.location.href = "invitation.html?name=" + encodeURIComponent(name);
+  /* FORCE USER INTERACTION BEFORE NAVIGATION */
+  const audio = new Audio("dhurander.mp3");
+  audio.play().then(() => {
+    audio.pause();
+    window.location.href = "invitation.html?name=" + encodeURIComponent(name);
+  }).catch(() => {
+    window.location.href = "invitation.html?name=" + encodeURIComponent(name);
+  });
 }
 </script>
 
