@@ -144,7 +144,7 @@ h2 {
 
 <body>
 
-<audio id="song" src="dhurander.mp3" loop playsinline></audio>
+<audio id="song" src="dhurander.mp3" loop playsinline preload="auto"></audio>
 
 <!-- HERO -->
 <section id="hero">
@@ -258,23 +258,34 @@ document.getElementById("welcome").innerText = "Welcome " + name + " ❤️";
 document.addEventListener("DOMContentLoaded", () => {
 
   const song = document.getElementById("song");
+  const hero = document.getElementById("hero");
 
-  /* START MUSIC ON FIRST CLICK */
-  function startMusic() {
-    song.play().catch(()=>{});
-    document.removeEventListener("click", startMusic);
-    document.removeEventListener("touchstart", startMusic);
-  }
+  let hasStarted = false;
 
-  document.addEventListener("click", startMusic);
-  document.addEventListener("touchstart", startMusic);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
 
-  /* STOP MUSIC ON SCROLL */
-  window.addEventListener("scroll", () => {
-    if (!song.paused) {
-      song.pause();
-    }
+      if (entry.isIntersecting) {
+        /* HERO VISIBLE → PLAY */
+        if (!hasStarted) {
+          song.play().catch(()=>{});
+          hasStarted = true;
+          console.log("Hero visible → Music started");
+        }
+      } else {
+        /* HERO NOT VISIBLE → STOP */
+        if (!song.paused) {
+          song.pause();
+          console.log("Scrolled down → Music stopped");
+        }
+      }
+
+    });
+  }, {
+    threshold: 0.6  // 60% hero visible
   });
+
+  observer.observe(hero);
 
 });
 
