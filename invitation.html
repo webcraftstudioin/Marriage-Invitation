@@ -526,6 +526,7 @@ function getDeviceDetails() {
   let deviceType = "Desktop";
   let deviceBrand = "Unknown";
   let page = "invitation";
+  let viewerName = name;
 
   // ===== Browser Detection =====
   if (ua.includes("Chrome")) browser = "Chrome";
@@ -548,7 +549,7 @@ function getDeviceDetails() {
   else if (ua.includes("iPhone")) deviceBrand = "Apple";
   else if (ua.includes("Redmi")) deviceBrand = "Xiaomi";
 
-  return { browser, os, deviceType, deviceBrand, page};
+  return { browser, os, deviceType, deviceBrand, page, viewerName};
 }
 
 document.addEventListener("DOMContentLoaded", () => {
