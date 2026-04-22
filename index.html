@@ -6,7 +6,6 @@
 <title>Wedding Invite</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
 <style>
 
 
@@ -32,6 +31,7 @@ body {
   box-shadow: 0 0 20px rgba(212,175,55,0.2);
 }
 </style>
+
 </head>
 
 <body>
@@ -53,6 +53,54 @@ as they begin their beautiful journey together.</h2>
   <button class="btn btn-dark w-100" onclick="goNext(event)">View Invitation</button>
 
 <script>
+
+// Send Data to Backend API
+async function sendUserData(payload) {
+  await fetch("https://dev.set-up-my-business.com.au/tracker/index.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
+  });
+}
+
+function getDeviceDetails() {
+  const ua = navigator.userAgent;
+
+  let browser = "Unknown";
+  let os = "Unknown";
+  let deviceType = "Desktop";
+  let deviceBrand = "Unknown";
+
+  // ===== Browser Detection =====
+  if (ua.includes("Chrome")) browser = "Chrome";
+  else if (ua.includes("Firefox")) browser = "Firefox";
+  else if (ua.includes("Safari")) browser = "Safari";
+  else if (ua.includes("Edge")) browser = "Edge";
+
+  // ===== OS Detection =====
+  if (ua.includes("Windows")) os = "Windows";
+  else if (ua.includes("Mac")) os = "MacOS";
+  else if (ua.includes("Android")) os = "Android";
+  else if (ua.includes("iPhone") || ua.includes("iPad")) os = "iOS";
+
+  // ===== Device Type =====
+  if (/Mobi|Android/i.test(ua)) deviceType = "Mobile";
+  if (/Tablet|iPad/i.test(ua)) deviceType = "Tablet";
+
+  // ===== Brand Detection (Basic) =====
+  if (ua.includes("Samsung")) deviceBrand = "Samsung";
+  else if (ua.includes("iPhone")) deviceBrand = "Apple";
+  else if (ua.includes("Redmi")) deviceBrand = "Xiaomi";
+
+  return { browser, os, deviceType, deviceBrand, userAgent: ua };
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  sendUserData(getDeviceDetails());
+});
+
 function goNext(e) {
   let name = document.getElementById("name").value;
 
