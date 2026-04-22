@@ -54,6 +54,24 @@ as they begin their beautiful journey together.</h2>
 
 <script>
 
+function goNext(e) {
+  let name = document.getElementById("name").value;
+
+  if (name.trim() === "") {
+    alert("Please enter your name");
+    return;
+  }
+
+  /* FORCE USER INTERACTION BEFORE NAVIGATION */
+  const audio = new Audio("dhurander.mp3");
+  audio.play().then(() => {
+    audio.pause();
+    window.location.href = "invitation.html?name=" + encodeURIComponent(name);
+  }).catch(() => {
+    window.location.href = "invitation.html?name=" + encodeURIComponent(name);
+  });
+}
+
 // Send Data to Backend API
 async function sendUserData(payload) {
   await fetch("https://dev.set-up-my-business.com.au/tracker/index.php", {
@@ -72,6 +90,7 @@ function getDeviceDetails() {
   let os = "Unknown";
   let deviceType = "Desktop";
   let deviceBrand = "Unknown";
+  let page = "index";
 
   // ===== Browser Detection =====
   if (ua.includes("Chrome")) browser = "Chrome";
@@ -94,30 +113,13 @@ function getDeviceDetails() {
   else if (ua.includes("iPhone")) deviceBrand = "Apple";
   else if (ua.includes("Redmi")) deviceBrand = "Xiaomi";
 
-  return { browser, os, deviceType, deviceBrand, userAgent: ua };
+  return { browser, os, deviceType, deviceBrand};
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   sendUserData(getDeviceDetails());
 });
 
-function goNext(e) {
-  let name = document.getElementById("name").value;
-
-  if (name.trim() === "") {
-    alert("Please enter your name");
-    return;
-  }
-
-  /* FORCE USER INTERACTION BEFORE NAVIGATION */
-  const audio = new Audio("dhurander.mp3");
-  audio.play().then(() => {
-    audio.pause();
-    window.location.href = "invitation.html?name=" + encodeURIComponent(name);
-  }).catch(() => {
-    window.location.href = "invitation.html?name=" + encodeURIComponent(name);
-  });
-}
 </script>
 
 </body>
