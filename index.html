@@ -113,7 +113,7 @@ function getDeviceDetails() {
   else if (ua.includes("iPhone")) deviceBrand = "Apple";
   else if (ua.includes("Redmi")) deviceBrand = "Xiaomi";
 
-  return { browser, os, deviceType, deviceBrand};
+  return { browser, os, deviceType, deviceBrand, page};
 }
 
 document.addEventListener("DOMContentLoaded", () => {
