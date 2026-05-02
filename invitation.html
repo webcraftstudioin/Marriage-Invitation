@@ -372,17 +372,46 @@ footer {
 </section>
 
 <!-- MODAL -->
-<div id="imageModal" class="image-modal" onclick="closeModal()">
-  <span style="
+<div id="imageModal" class="image-modal">
+  
+  <!-- CLOSE -->
+  <span onclick="closeModal()" style="
     position:absolute;
     top:20px;
     right:25px;
     font-size:30px;
     color:white;
     cursor:pointer;
+    z-index:10;
   ">&times;</span>
 
+  <!-- LEFT BUTTON -->
+  <span onclick="prevImage()" style="
+    position:absolute;
+    left:20px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:40px;
+    color:white;
+    cursor:pointer;
+    z-index:10;
+  ">❮</span>
+
+  <!-- IMAGE -->
   <img id="modalImg">
+
+  <!-- RIGHT BUTTON -->
+  <span onclick="nextImage()" style="
+    position:absolute;
+    right:20px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:40px;
+    color:white;
+    cursor:pointer;
+    z-index:10;
+  ">❯</span>
+
 </div>
 
 <!-- LOCATION -->
@@ -391,7 +420,7 @@ footer {
 </section>
 
 <footer class="text-center mt-4 mb-3">
-  <p>© Developed by <a href="https://webcraftstudioin.github.io/webcraftstudioportfolio.in/" target="_blank" style="color:#d4af37; text-decoration:none;">Shashanka</a></p>
+  <p>Designed & Developed by <a href="https://webcraftstudioin.github.io/webcraftstudioportfolio.in/" target="_blank" style="color:#d4af37; text-decoration:none;">Shashanka</a></p>
 </footer>
 
 <script>
@@ -454,37 +483,63 @@ function openMap() {
 }
 
 /* MODAL */
+let currentGallery = [];
+let currentIndex = 0;
+
+/* OPEN MODAL */
 function openModal(src) {
   const modal = document.getElementById("imageModal");
   const img = document.getElementById("modalImg");
 
-  modal.style.display = "flex";
-  img.src = src;
+  // Get clicked image gallery
+  const gallery = event.target.closest(".memory-gallery");
+  currentGallery = Array.from(gallery.querySelectorAll("img"));
 
-  document.body.style.overflow = "hidden"; // prevent background scroll
+  // Find index
+  currentIndex = currentGallery.findIndex(i => i.src === src);
+
+  img.src = src;
+  modal.style.display = "flex";
+
+  document.body.style.overflow = "hidden";
 }
 
+/* CLOSE */
 function closeModal() {
   document.getElementById("imageModal").style.display = "none";
   document.body.style.overflow = "auto";
 }
 
-document.querySelectorAll(".memory-gallery").forEach(gallery => {
-  gallery.addEventListener("scroll", () => {
-    const images = gallery.querySelectorAll("img");
-    const center = gallery.scrollLeft + gallery.offsetWidth / 2;
+/* NEXT */
+function nextImage() {
+  if (currentGallery.length === 0) return;
 
-    images.forEach(img => {
-      const box = img.offsetLeft + img.offsetWidth / 2;
-      const distance = Math.abs(center - box);
+  currentIndex = (currentIndex + 1) % currentGallery.length;
+  document.getElementById("modalImg").src = currentGallery[currentIndex].src;
+}
 
-      if (distance < 80) {
-        img.style.transform = "scale(1.1)";
-      } else {
-        img.style.transform = "scale(1)";
-      }
-    });
-  });
+/* PREVIOUS */
+function prevImage() {
+  if (currentGallery.length === 0) return;
+
+  currentIndex =
+    (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+
+  document.getElementById("modalImg").src = currentGallery[currentIndex].src;
+}
+
+
+let startX = 0;
+
+document.getElementById("imageModal").addEventListener("touchstart", e => {
+  startX = e.touches[0].clientX;
+});
+
+document.getElementById("imageModal").addEventListener("touchend", e => {
+  let endX = e.changedTouches[0].clientX;
+
+  if (startX - endX > 50) nextImage();     // swipe left
+  if (endX - startX > 50) prevImage();     // swipe right
 });
 
 
